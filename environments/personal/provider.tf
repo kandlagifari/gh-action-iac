@@ -23,6 +23,6 @@ terraform {
 /* ----------------------------- Provider Block ----------------------------- */
 
 provider "aws" {
-  region                 = "ap-southeast-3"
+  region                 = "us-east-1"
   skip_region_validation = true
 }
