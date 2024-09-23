@@ -3,6 +3,6 @@
 /* ------------------------------------------------------------------------------------------------------------------ */
 
 module "local_s3_website" {
-  source            = "../../modules/s3-website"
+  source            = "../../modules/s3-bucket"
   s3_bucket_details = var.s3_bucket_details
 }
