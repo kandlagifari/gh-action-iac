@@ -47,45 +47,45 @@ jobs:
         cd ./environments/personal
         terraform init
     
-    # - name: Terraform plan
-    #   id: plan
-    #   # if: github.event_name == 'pull_request'
-    #   run: |
-    #     cd ./environments/personal
-    #     terraform plan -input=false
-    #   continue-on-error: true
+    - name: Terraform plan
+      id: plan
+      # if: github.event_name == 'pull_request'
+      run: |
+        cd ./environments/personal
+        terraform plan -input=false
+      continue-on-error: true
       
-    # - name: Terraform Plan Status
-    #   if: steps.plan.outcome == 'failure'
-    #   run: exit 1
+    - name: Terraform Plan Status
+      if: steps.plan.outcome == 'failure'
+      run: exit 1
     
-    # - name: Manual Approval
-    #   uses: trstringer/manual-approval@v1
-    #   with:
-    #     secret: ${{ github.TOKEN }}
-    #     approvers: kandlagifari
-    #     minimum-approvals: 1
-    #     issue-title: "Deploying to Personal Environment"
-    #     issue-body: "Review the terraform plan, then approve or deny the deployment to Personal Environment."
-    #     exclude-workflow-initiator-as-approver: false
+    - name: Manual Approval
+      uses: trstringer/manual-approval@v1
+      with:
+        secret: ${{ github.TOKEN }}
+        approvers: kandlagifari
+        minimum-approvals: 1
+        issue-title: "Deploying to Personal Environment"
+        issue-body: "Review the terraform plan, then approve or deny the deployment to Personal Environment."
+        exclude-workflow-initiator-as-approver: false
 
-    # - name: Terraform Apply
-    #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    - name: Terraform Apply
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      run: |
+        cd ./environments/personal
+        terraform apply -auto-approve -input=false
+    
+    # - name: Terraform destroy
+    #   id: destroy
     #   run: |
     #     cd ./environments/personal
-    #     terraform apply -auto-approve -input=false
+    #     terraform destroy -auto-approve -input=false
     
-    - name: Terraform destroy
-      id: destroy
-      run: |
-        cd ./environments/personal
-        terraform destroy -auto-approve -input=false
-    
-    - name: Terraform state list
-      id: state
-      run: |
-        cd ./environments/personal
-        terraform state list
+    # - name: Terraform state list
+    #   id: state
+    #   run: |
+    #     cd ./environments/personal
+    #     terraform state list
 
     # - name: Terraform force unlock
     #   id: unlock
